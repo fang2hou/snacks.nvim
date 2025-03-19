@@ -71,6 +71,10 @@ function M.grep(opts, ctx)
         item.cwd = cwd
         local file, line, col, text = item.text:match("^(.+):(%d+):(%d+):(.*)$")
         if not file then
+          file, line, text = item.text:match("^(.+):(%d+):(.*)$")
+          col = "1"
+        end
+        if not file then
           if not item.text:match("WARNING") then
             Snacks.notify.error("invalid grep output:\n" .. item.text)
           end
